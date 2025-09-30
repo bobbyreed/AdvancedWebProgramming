@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Overview - CSCI 3503</title>
+    
+    <!-- Database Design Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Import Courier Prime for analog feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        /* Override font for analog feel */
+        body, .slide, h1, h2, h3, p, li {
+            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace !important;
+        }
+        
+        .grading-table {
+            margin: 30px 0;
+            font-size: 1.4em;
+        }
+        
+        .grading-table div {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .grading-table div:last-child {
+            border-bottom: 3px solid var(--ocu-true-blue);
+            font-weight: bold;
+        }
+        
+        .policy-table {
+            background: var(--bg-accent);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .policy-table table {
+            width: 100%;
+            font-size: 1.2em;
+        }
+        
+        .policy-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .policy-table td:first-child {
+            font-weight: bold;
+            width: 50%;
+        }
+        
+        .contact-info {
+            background: var(--bg-accent);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid var(--ocu-cyan);
+        }
+        
+        .contact-info a {
+            color: var(--ocu-cyan);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .warning-box {
+            background: var(--warning-bg);
+            border: 2px solid var(--warning-border);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .instructor-info {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .instructor-details {
+            flex: 1;
+        }
+        
+        .instructor-details ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .instructor-details li {
+            margin: 15px 0;
+            font-size: 1.3em;
+        }
+        
+        .instructor-details li::before {
+            content: "▸ ";
+            color: var(--ocu-cyan);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            margin: 15px 0;
+            font-size: 1.1em;
+            border-left: 4px solid var(--ocu-cyan);
+            overflow-x: auto;
+        }
+        
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        
+        code {
+            background: var(--bg-accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--ocu-true-blue);
+            font-size: 0.95em;
+        }
+        
+        [data-theme="dark"] code {
+            color: var(--ocu-cyan);
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .activity-box {
+            background: linear-gradient(135deg, var(--bg-accent), var(--bg-secondary));
+            border: 2px solid var(--border-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .activity-box h3 {
+            color: var(--ocu-true-blue);
+            margin-bottom: 15px;
+        }
+        
+        [data-theme="dark"] .activity-box h3 {
+            color: var(--ocu-cyan);
+        }
+        
+        .demo-box {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        .tip-box {
+            background: var(--success-bg);
+            border: 2px solid var(--success-border);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .tip-box strong {
+            color: var(--success-border);
+        }
+        
+        .homework-item {
+            background: var(--bg-accent);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid var(--ocu-true-blue);
+        }
+        
+        [data-theme="dark"] .homework-item {
+            border-left-color: var(--ocu-cyan);
+        }
+        
+        .exercise-step {
+            background: var(--bg-secondary);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .timer-badge {
+            display: inline-block;
+            background: var(--ocu-yellow);
+            color: var(--ocu-dark-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme toggle will be automatically added by JavaScript -->
+    
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Lecture 00 - Course Overview
+                 <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Database Design</h1>
+            <h2>Course Overview & Syllabus <span class="emoji">🗄️</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3503 - Database Design</p>
+            <p style="font-size: 1.3em;">Spring 2025 | 8-Week Course</p>
+            <p style="margin-top: auto; font-style: italic;">Building the data foundations of tomorrow!</p>
+        </div>
+
+        <!-- SYLLABUS SLIDES START -->
+        
+        <!-- Slide 2: Course Information -->
+        <div class="slide">
+            <h1>Course Information <span class="emoji">📚</span></h1>
+            <div class="demo-box">
+                <h3>Course Details</h3>
+                <ul style="font-size: 1.2em; line-height: 1.8;">
+                    <li><strong>Course:</strong> CSCI 3503 - Database Design</li>
+                    <li><strong>Instructor:</strong> Bobby Reed</li>
+                    <li><strong>Email:</strong> <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></li>
+                    <li><strong>Office:</strong> SSM 204A</li>
+                    <li><strong>Office Hours:</strong> By appointment (via Teams)</li>
+                </ul>
+            </div>
+            
+            <div class="demo-box">
+                <h3>Course Description</h3>
+                <p style="font-size: 1.1em;">A comprehensive study of database design principles, implementation techniques, and management strategies. Students will learn to design, implement, and maintain professional database systems using industry-standard tools and best practices.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Learning Objectives -->
+        <div class="slide">
+            <h1>Course Objectives <span class="emoji">🎯</span></h1>
+            <h2>What You'll Master</h2>
+            
+            <div class="activity-box">
+                <p>Upon successful completion, you will be competent in:</p>
+                <ul style="font-size: 1.2em; line-height: 1.8;">
+                    <li>✅ Database Design & Normalization</li>
+                    <li>✅ Entity-Relationship Modeling</li>
+                    <li>✅ SQL Programming & Optimization</li>
+                    <li>✅ Transaction Management & Concurrency Control</li>
+                    <li>✅ Database Security & Performance Tuning</li>
+                    <li>✅ NoSQL Databases & Modern Data Storage</li>
+                    <li>✅ Database Administration & Maintenance</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Career Skills:</strong> These competencies are directly aligned with industry requirements for Database Administrators, Data Engineers, and Backend Developers.
+            </div>
+        </div>
+
+        <!-- Slide 4: Grading & Assessment -->
+        <div class="slide">
+            <h1>Grading Structure <span class="emoji">📊</span></h1>
+            
+            <div class="grading-table">
+                <div>
+                    <span>📝 Homework & Labs</span>
+                    <span>30%</span>
+                </div>
+                <div>
+                    <span>🎯 Quizzes</span>
+                    <span>30%</span>
+                </div>
+                <div>
+                    <span>📊 Final Exam</span>
+                    <span>40%</span>
+                </div>
+                <div>
+                    <span>Total</span>
+                    <span>100%</span>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <h3>Grading Scale</h3>
+                <p style="font-size: 1.3em; text-align: center;">
+                    <strong>A:</strong> 90-100 | 
+                    <strong>B:</strong> 80-89 | 
+                    <strong>C:</strong> 70-79 | 
+                    <strong>D:</strong> 60-69 | 
+                    <strong>F:</strong> Below 60
+                </p>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Success Tip:</strong> Keep track of your grades in D2L. I aim to return graded work within one week of submission.
+            </div>
+        </div>
+
+        <!-- Slide 5: Course Policies -->
+        <div class="slide">
+            <h1>Course Policies <span class="emoji">📋</span></h1>
+            
+            <div class="warning-box">
+                <h3>⏰ Late Assignment Policy</h3>
+                <table style="width: 100%; font-size: 1.1em;">
+                    <tr><td>On time</td><td style="text-align: right; color: var(--ocu-green);">100%</td></tr>
+                    <tr><td>1 day late</td><td style="text-align: right; color: var(--ocu-yellow);">90%</td></tr>
+                    <tr><td>2-7 days late</td><td style="text-align: right;">-10% per day</td></tr>
+                    <tr><td>&gt; 1 week late</td><td style="text-align: right; color: red;">50% maximum</td></tr>
+                </table>
+                <p style="margin-top: 10px;"><strong>Extensions:</strong> Request at least 24 hours before due date</p>
+            </div>
+            
+            <div class="demo-box">
+                <h3>Academic Integrity</h3>
+                <ul>
+                    <li>❌ Zero tolerance for cheating/plagiarism</li>
+                    <li>❌ AI-generated content must be cited</li>
+                    <li>✅ Collaboration encouraged, but submit your own work</li>
+                    <li>✅ When in doubt, ask for clarification</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: AI Usage Policy -->
+        <div class="slide">
+            <h1>AI Usage Guidelines <span class="emoji">🤖</span></h1>
+            <h2>Responsible AI Use in Database Design</h2>
+            
+            <div class="demo-box">
+                <h3>✅ Permitted Uses</h3>
+                <ul style="font-size: 1.1em;">
+                    <li>Debugging SQL queries</li>
+                    <li>Understanding error messages</li>
+                    <li>Generating test data</li>
+                    <li>Learning new concepts</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h3>⚠️ Required Citation</h3>
+                <p>When using AI tools, you must:</p>
+                <ol>
+                    <li>Document which tool was used (ChatGPT, Copilot, etc.)</li>
+                    <li>Explain how it was used</li>
+                    <li>Include the prompts and responses</li>
+                    <li>Identify what you modified or learned</li>
+                </ol>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Remember:</strong> AI is a tool to enhance learning, not replace understanding. You'll need to explain your database designs in exams without AI assistance.
+            </div>
+        </div>
+
+        <!-- ORIGINAL COURSE OVERVIEW CONTENT CONTINUES -->
+
+        <!-- Slide 7: Course Structure -->
+        <div class="slide">
+            <h1>Course Delivery</h1>
+            <div class="demo-box">
+                <h3>📹 Format</h3>
+                <p style="font-size: 1.3em;">Classes will be <strong>prerecorded</strong> and published in D2L on <strong>Monday</strong> each week</p>
+            </div>
+            
+            <div class="demo-box">
+                <h3>📅 Weekly Structure</h3>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Monday:</strong> Lecture videos released</li>
+                    <li><strong>Wednesday:</strong> Labs/Exercises due</li>
+                    <li><strong>Friday:</strong> Homework due</li>
+                    <li><strong>Sunday:</strong> Quiz available (if scheduled)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8: Your Instructor -->
+        <div class="slide">
+            <h1>Your Instructor</h1>
+            <div class="instructor-info">
+                <div class="instructor-details">
+                    <h2>Bobby Reed</h2>
+                    <ul>
+                        <li><strong>Instructor</strong> of Computer Science & Mathematics</li>
+                        <li><strong>BA/MA</strong> - University of Central Oklahoma</li>
+                        <li><strong>MLIS</strong> - Oklahoma University<br>
+                            <span style="margin-left: 40px;">Focus: Emerging Technologies</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Class Communication -->
+        <div class="slide">
+            <h1>Class Communication</h1>
+            <div class="contact-info">
+                <h3>📚 Course Materials</h3>
+                <p style="font-size: 1.3em;"><a href="https://ocuonline.okcu.edu" target="_blank">D2L</a></p>
+                <p style="font-size: 1.3em;"><a href="databasedesign.netlify.app" target="_blank">This Site</a></p>
+                <p>All course materials, lectures, and assignments</p>
+            </div>
+            
+            <div class="contact-info">
+                <h3>📧 Contact Information</h3>
+                <p style="font-size: 1.3em;"><a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></p>
+                <p>Response time: Within 24 hours on weekdays</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: What We'll Cover -->
+        <div class="slide">
+            <h1>Course Topics <span class="emoji">📚</span></h1>
+            <h2>8 Weeks of Database Mastery</h2>
+            
+            <div class="two-column">
+                <div class="demo-box">
+                    <h3>Weeks 1-4: Foundations</h3>
+                    <ul>
+                        <li>Database Concepts & Theory</li>
+                        <li>Entity-Relationship Modeling</li>
+                        <li>Relational Database Design</li>
+                        <li>Normalization (1NF, 2NF, 3NF, BCNF)</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-box">
+                    <h3>Weeks 5-8: Advanced Topics</h3>
+                    <ul>
+                        <li>SQL Programming & Optimization</li>
+                        <li>Transactions & Concurrency</li>
+                        <li>NoSQL Databases</li>
+                        <li>Database Security & Performance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENVIRONMENT SETUP SECTION -->
+
+        <!-- Slide 11: Environment Setup Overview -->
+        <div class="slide">
+            <h1>Environment Setup <span class="emoji">💻</span></h1>
+            <h2>Choose Your Operating System</h2>
+            
+            <div class="tip-box">
+                <strong>Important:</strong> We'll be setting up a professional database development environment. Follow the instructions for your operating system.
+            </div>
+            
+            <div class="two-column" style="margin-top: 30px;">
+                <div class="demo-box">
+                    <h3>🪟 Windows Users</h3>
+                    <p>We'll use <strong>WSL</strong> (Windows Subsystem for Linux) to create a Linux environment</p>
+                    <ul>
+                        <li>Native Linux performance</li>
+                        <li>Industry-standard setup</li>
+                        <li>Seamless Windows integration</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-box">
+                    <h3>🍎 Mac Users</h3>
+                    <p>macOS provides a <strong>Unix-based</strong> environment out of the box</p>
+                    <ul>
+                        <li>Native terminal access</li>
+                        <li>Homebrew package manager</li>
+                        <li>Direct database installation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Windows Setup - WSL Installation -->
+        <div class="slide">
+            <h1>Windows Setup: WSL <span class="emoji">🪟</span></h1>
+            <h2>Step 1: Install WSL and Linux</h2>
+            
+            <div class="activity-box">
+                <h3>Installation Steps:</h3>
+                <ol style="font-size: 1.2em;">
+                    <li><strong>Enable WSL:</strong> Open PowerShell as Administrator and run:
+                        <div class="code-example">wsl --install</div>
+                    </li>
+                    <li><strong>Restart</strong> your computer when prompted</li>
+                    <li><strong>Install Ubuntu</strong> from the Microsoft Store</li>
+                    <li><strong>Launch Ubuntu</strong> and create your Linux username/password</li>
+                </ol>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Why WSL?</strong>
+                <ul>
+                    <li>✅ Linux-native environment matching production servers</li>
+                    <li>✅ Access to Linux tools and utilities</li>
+                    <li>✅ Near-native performance with WSL 2</li>
+                    <li>✅ Seamless integration with Windows</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: Windows Setup - Database Installation -->
+        <div class="slide">
+            <h1>Windows Setup: PostgreSQL <span class="emoji">🐘</span></h1>
+            <h2>Step 2: Install Database Server</h2>
+            
+            <div class="activity-box">
+                <h3>In your WSL Terminal:</h3>
+                <ol style="font-size: 1.2em;">
+                    <li>Update package lists:
+                        <div class="code-example">sudo apt update</div>
+                    </li>
+                    <li>Install PostgreSQL:
+                        <div class="code-example">sudo apt install postgresql postgresql-contrib</div>
+                    </li>
+                    <li>Start the database service:
+                        <div class="code-example">sudo service postgresql start</div>
+                    </li>
+                    <li>Verify installation:
+                        <div class="code-example">sudo -u postgres psql -c "SELECT version();"</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="demo-box">
+                <strong>Alternative Databases:</strong>
+                <ul>
+                    <li><strong>MySQL:</strong> <code>sudo apt install mysql-server</code></li>
+                    <li><strong>MongoDB:</strong> Follow MongoDB's official Ubuntu installation guide</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Mac Setup -->
+        <div class="slide">
+            <h1>Mac Setup: Environment <span class="emoji">🍎</span></h1>
+            <h2>Installing Homebrew & PostgreSQL</h2>
+            
+            <div class="activity-box">
+                <h3>Step 1: Install Homebrew (if needed)</h3>
+                <p>Open Terminal and run:</p>
+                <div class="code-example">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+            </div>
+            
+            <div class="activity-box">
+                <h3>Step 2: Install PostgreSQL</h3>
+                <ol style="font-size: 1.2em;">
+                    <li>Install PostgreSQL:
+                        <div class="code-example">brew install postgresql@14</div>
+                    </li>
+                    <li>Start PostgreSQL service:
+                        <div class="code-example">brew services start postgresql@14</div>
+                    </li>
+                    <li>Verify installation:
+                        <div class="code-example">psql --version</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="demo-box">
+                <strong>Alternative for Mac:</strong> Download <a href="https://postgresapp.com/" style="color: var(--ocu-cyan);">Postgres.app</a> for a GUI-based installation
+            </div>
+        </div>
+
+        <!-- Slide 15: Development Tools -->
+        <div class="slide">
+            <h1>Development Tools <span class="emoji">🛠️</span></h1>
+            <h2>Essential Software for Database Development</h2>
+            
+            <div class="demo-box">
+                <h3>1. Visual Studio Code</h3>
+                <ul>
+                    <li>Download from <a href="https://code.visualstudio.com/" style="color: var(--ocu-cyan);">code.visualstudio.com</a></li>
+                    <li><strong>Windows:</strong> Install "Remote - WSL" extension</li>
+                    <li><strong>Mac:</strong> Install "PostgreSQL" extension</li>
+                    <li>Enables SQL syntax highlighting and IntelliSense</li>
+                </ul>
+            </div>
+            
+            <div class="demo-box">
+                <h3>2. DataGrip (Required)</h3>
+                <ul>
+                    <li>Professional database IDE by JetBrains</li>
+                    <li><strong>FREE for students</strong> with .edu email</li>
+                    <li>We'll set this up in homework</li>
+                </ul>
+            </div>
+            
+            <div class="demo-box">
+                <h3>3. Alternative GUI Clients</h3>
+                <ul>
+                    <li><strong>DBeaver:</strong> Free, universal database tool</li>
+                    <li><strong>pgAdmin:</strong> PostgreSQL-specific admin tool</li>
+                    <li><strong>TablePlus:</strong> Modern interface (free trial)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 16: Testing Your Setup -->
+        <div class="slide">
+            <h1>Testing Your Setup <span class="emoji">✅</span></h1>
+            <h2>Verify Everything Works</h2>
+            
+            <div class="activity-box">
+                <h3>Quick Test Commands:</h3>
+                <ol style="font-size: 1.2em;">
+                    <li><strong>Access PostgreSQL:</strong>
+                        <div class="code-example">
+                            <span class="comment"># Windows (WSL) / Mac / Linux</span><br>
+                            sudo -u postgres psql
+                        </div>
+                    </li>
+                    <li><strong>Create a test database:</strong>
+                        <div class="code-example">CREATE DATABASE testdb;</div>
+                    </li>
+                    <li><strong>List databases:</strong>
+                        <div class="code-example">\l</div>
+                    </li>
+                    <li><strong>Exit PostgreSQL:</strong>
+                        <div class="code-example">\q</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Troubleshooting:</strong>
+                <ul>
+                    <li>🔧 <strong>Service not running?</strong> Start with <code>sudo service postgresql start</code> (WSL) or <code>brew services restart postgresql</code> (Mac)</li>
+                    <li>🔧 <strong>Permission denied?</strong> Make sure to use <code>sudo</code> when needed</li>
+                    <li>🔧 <strong>Can't connect?</strong> Check if the service is running with <code>ps aux | grep postgres</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IN-CLASS EXERCISE SECTION -->
+
+        <!-- Slide 17: In-Class Exercise Overview -->
+        <div class="slide">
+            <h1>In-Class Exercise <span class="emoji">🏗️</span></h1>
+            <h2>Build Your First Database <span class="timer-badge">60 minutes</span></h2>
+            
+            <div class="demo-box">
+                <h3>Exercise Overview</h3>
+                <p style="font-size: 1.2em;">Today, you'll design and implement a small database for a library management system. This hands-on exercise will reinforce your environment setup and introduce core database concepts.</p>
+            </div>
+            
+            <div class="activity-box">
+                <h3>Learning Objectives</h3>
+                <ul style="font-size: 1.15em;">
+                    <li>✅ Create and connect to a database</li>
+                    <li>✅ Design and create tables</li>
+                    <li>✅ Insert sample data</li>
+                    <li>✅ Write basic SQL queries</li>
+                    <li>✅ Understand relationships between tables</li>
+                </ul>
+            </div>
+            
+            <button data-timer="60">Start 60-Minute Timer</button>
+        </div>
+
+        <!-- Slide 18: Exercise Part 1 - Database Creation -->
+        <div class="slide">
+            <h1>Part 1: Create Database <span class="timer-badge">10 min</span></h1>
+            
+            <div class="exercise-step">
+                <h3>Step 1: Connect to PostgreSQL</h3>
+                <div class="code-example">sudo -u postgres psql</div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Step 2: Create the Library Database</h3>
+                <div class="code-example">
+                    CREATE DATABASE library_db;<br>
+                    \c library_db;
+                </div>
+                <p style="margin-top: 10px;">You should see: <code>You are now connected to database "library_db"</code></p>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Step 3: Create a Schema (Optional)</h3>
+                <div class="code-example">
+                    CREATE SCHEMA library;<br>
+                    SET search_path TO library;
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Use <code>\dt</code> to list tables and <code>\d tablename</code> to describe a table structure
+            </div>
+        </div>
+
+        <!-- Slide 19: Exercise Part 2 - Table Design -->
+        <div class="slide">
+            <h1>Part 2: Create Tables <span class="timer-badge">15 min</span></h1>
+            
+            <div class="exercise-step">
+                <h3>Create the Authors Table</h3>
+                <div class="code-example">
+CREATE TABLE authors (
+    author_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    birth_date DATE,
+    nationality VARCHAR(50)
+);
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Create the Books Table</h3>
+                <div class="code-example">
+CREATE TABLE books (
+    book_id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    isbn VARCHAR(13) UNIQUE,
+    publication_year INTEGER,
+    pages INTEGER CHECK (pages > 0),
+    author_id INTEGER REFERENCES authors(author_id)
+);
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Create the Members Table</h3>
+                <div class="code-example">
+CREATE TABLE members (
+    member_id SERIAL PRIMARY KEY,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    join_date DATE DEFAULT CURRENT_DATE
+);
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Exercise Part 3 - Insert Data -->
+        <div class="slide">
+            <h1>Part 3: Insert Sample Data <span class="timer-badge">15 min</span></h1>
+            
+            <div class="exercise-step">
+                <h3>Insert Authors</h3>
+                <div class="code-example">
+INSERT INTO authors (first_name, last_name, birth_date, nationality) VALUES
+('Jane', 'Austen', '1775-12-16', 'British'),
+('Mark', 'Twain', '1835-11-30', 'American'),
+('Agatha', 'Christie', '1890-09-15', 'British'),
+('Stephen', 'King', '1947-09-21', 'American');
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Insert Books</h3>
+                <div class="code-example">
+INSERT INTO books (title, isbn, publication_year, pages, author_id) VALUES
+('Pride and Prejudice', '9780141439518', 1813, 432, 1),
+('Sense and Sensibility', '9780141439662', 1811, 409, 1),
+('Adventures of Huckleberry Finn', '9780486280615', 1884, 224, 2),
+('Murder on the Orient Express', '9780062693662', 1934, 256, 3),
+('The Shining', '9780307743657', 1977, 447, 4);
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Insert Members</h3>
+                <div class="code-example">
+INSERT INTO members (email, first_name, last_name) VALUES
+('john.doe@email.com', 'John', 'Doe'),
+('jane.smith@email.com', 'Jane', 'Smith'),
+('bob.wilson@email.com', 'Bob', 'Wilson');
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Exercise Part 4 - Queries -->
+        <div class="slide">
+            <h1>Part 4: Query Practice <span class="timer-badge">15 min</span></h1>
+            
+            <div class="exercise-step">
+                <h3>Query 1: List all books with their authors</h3>
+                <div class="code-example">
+SELECT b.title, a.first_name || ' ' || a.last_name AS author
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY b.title;
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Query 2: Find books published before 1900</h3>
+                <div class="code-example">
+SELECT title, publication_year 
+FROM books 
+WHERE publication_year < 1900
+ORDER BY publication_year;
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Query 3: Count books by each author</h3>
+                <div class="code-example">
+SELECT a.first_name || ' ' || a.last_name AS author,
+       COUNT(b.book_id) AS book_count
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id, a.first_name, a.last_name
+ORDER BY book_count DESC;
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Exercise Part 5 - Advanced -->
+        <div class="slide">
+            <h1>Part 5: Loans Table <span class="timer-badge">5 min</span></h1>
+            <h2>Bonus: Create a Relationship Table</h2>
+            
+            <div class="exercise-step">
+                <h3>Create the Loans Table</h3>
+                <div class="code-example">
+CREATE TABLE loans (
+    loan_id SERIAL PRIMARY KEY,
+    book_id INTEGER REFERENCES books(book_id),
+    member_id INTEGER REFERENCES members(member_id),
+    loan_date DATE DEFAULT CURRENT_DATE,
+    return_date DATE,
+    CONSTRAINT valid_dates CHECK (return_date > loan_date)
+);
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Insert Sample Loans</h3>
+                <div class="code-example">
+INSERT INTO loans (book_id, member_id, loan_date, return_date) VALUES
+(1, 1, '2025-01-10', '2025-01-24'),
+(3, 2, '2025-01-15', NULL),
+(5, 1, '2025-01-20', NULL);
+                </div>
+            </div>
+            
+            <div class="exercise-step">
+                <h3>Query Active Loans</h3>
+                <div class="code-example">
+SELECT m.email, b.title, l.loan_date
+FROM loans l
+JOIN books b ON l.book_id = b.book_id
+JOIN members m ON l.member_id = m.member_id
+WHERE l.return_date IS NULL;
+                </div>
+            </div>
+        </div>
+
+        <!-- HOMEWORK SECTION -->
+
+        <!-- Slide 23: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Week 1 <span class="emoji">📝</span></h1>
+            <h2>Complete Your Development Environment</h2>
+            
+            <div class="homework-item">
+                <h3>1. Finish CLI Setup <span style="color: var(--ocu-cyan);">(if needed)</span></h3>
+                <ul>
+                    <li>Complete PostgreSQL installation</li>
+                    <li>Ensure you can connect via command line</li>
+                    <li>Create a test database successfully</li>
+                    <li>Take a screenshot of successful connection</li>
+                </ul>
+            </div>
+            
+            <div class="homework-item">
+                <h3>2. Install DataGrip <span style="color: var(--ocu-cyan);">(Required)</span></h3>
+                <ol style="font-size: 1.1em;">
+                    <li>Go to <a href="https://www.jetbrains.com/student/" style="color: var(--ocu-cyan);">jetbrains.com/student/</a></li>
+                    <li>Apply for free student license with your .edu email</li>
+                    <li>Download and install DataGrip</li>
+                    <li>Connect DataGrip to your local PostgreSQL</li>
+                    <li>Import the library_db from class exercise</li>
+                    <li>Take a screenshot of DataGrip showing your tables</li>
+                </ol>
+            </div>
+            
+            <div class="homework-item">
+                <h3>3. Database Exploration</h3>
+                <ul>
+                    <li>Using DataGrip, create an ER diagram of library_db</li>
+                    <li>Write 5 additional SQL queries exploring the data</li>
+                    <li>Export results as CSV files</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 24: Homework Submission -->
+        <div class="slide">
+            <h1>Homework Submission <span class="emoji">📤</span></h1>
+            
+            <div class="demo-box">
+                <h3>What to Submit</h3>
+                <p style="font-size: 1.2em;">Create a single PDF containing:</p>
+                <ol style="font-size: 1.15em;">
+                    <li>Screenshot of CLI PostgreSQL connection</li>
+                    <li>Screenshot of DataGrip with your database</li>
+                    <li>DataGrip ER diagram</li>
+                    <li>Your 5 SQL queries with results</li>
+                </ol>
+            </div>
+            
+            <div class="warning-box">
+                <h3>⏰ Due Date</h3>
+                <p style="font-size: 1.3em;"><strong>Friday 11:59 PM</strong></p>
+                <p>Submit via D2L Assignment Dropbox</p>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> DataGrip has a 30-day trial even without a license. Apply for the student license early to avoid interruption!
+            </div>
+        </div>
+
+        <!-- Final Slide: Next Steps -->
+        <div class="slide">
+            <h1>Ready to Begin? <span class="emoji">🚀</span></h1>
+            <h2>Your Week 1 Checklist</h2>
+            
+            <div class="activity-box">
+                <h3>Complete by End of Week</h3>
+                <ol style="font-size: 1.3em; line-height: 2;">
+                    <li>✅ Finish environment setup (WSL/PostgreSQL)</li>
+                    <li>✅ Apply for JetBrains student license</li>
+                    <li>✅ Install DataGrip and VS Code</li>
+                    <li>✅ Complete library database exercise</li>
+                    <li>✅ Submit homework assignment</li>
+                    <li>✅ Review Lecture 01: Database Fundamentals</li>
+                </ol>
+            </div>
+            
+            <div class="demo-box">
+                <p style="font-size: 1.3em; text-align: center;">
+                    <strong>Questions?</strong> Don't hesitate to reach out!<br>
+                    <a href="mailto:bobby.reed@okcu.edu" style="color: var(--ocu-cyan);">bobby.reed@okcu.edu</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">24</span>
+            </span>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../../js/presentation.js"></script>
+
+    <!-- Lecture-Specific JavaScript -->
+    <script>
+        // Course Overview specific interactions
+        document.addEventListener('slidechange', (e) => {
+            console.log(`Slide ${e.detail.currentSlide + 1} of ${e.detail.totalSlides}`);
+        });
+    </script>
+</body>
+</html>
